@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react'
-import Home from './src/components/home/home'
+import GeneralJokes from './src/components/joke/generalJokes'
 
 export default function App() {
   return (
-    <Home />
+    <GeneralJokes />
   )
 }

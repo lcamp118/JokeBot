@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
 import { StatusBar } from 'expo-status-bar';
 import {Animated, Button, Text, View, StyleSheet} from 'react-native'
+import useGetJoke from '../hooks/useGetJoke'
 
-export default function Home() {
+export default function GeneralJokes() {
     const [setup, setSetup] = useState()
   const [punchline, setPunchline] = useState()
   const [buttonText, setButtonText] = useState('TELL ME A JOKE!')
@@ -30,7 +31,7 @@ export default function Home() {
   };
 
   const handlePress = async () => {
-    if (timesPressed == 0) {const jsonData = await fetch('https://official-joke-api.appspot.com/jokes/general/random').then((response) => response.json())
+    if (timesPressed == 0) {const jsonData = await useGetJoke('general').then((response) => response.json())
     
     setTimesPressed(1)
     setButtonText("I GIVE UP!")
@@ -78,7 +79,7 @@ export default function Home() {
         ]}>
         <Text style={styles.fadingText}>{punchline}</Text>
       </Animated.View>
-        <Button title={buttonText} style={styles.text} onPress={handlePress}></Button>
+        <Button title={buttonText} color={'white'} onPress={handlePress}></Button>
       <StatusBar style="auto" />
     </View>
   );
