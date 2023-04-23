@@ -25,7 +25,7 @@ export default function GeneralJokes() {
     // Will change fadeAnim value to 0 in 3 seconds
     Animated.timing(fadeAnim, {
       toValue: 0,
-      duration: 10,
+      duration: 1,
       useNativeDriver: true,
     }).start();
   };
