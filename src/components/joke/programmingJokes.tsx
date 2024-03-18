@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import { StatusBar } from 'expo-status-bar';
 import {Animated, Button, Text, View, StyleSheet} from 'react-native'
 import useGetJoke from '../hooks/useGetJoke'
+import { fadeIn, fadeOut, disappear, appear } from './animations';
 
 export default function ProgrammingJokes() {
     const [setup, setSetup] = useState()
@@ -11,40 +12,25 @@ export default function ProgrammingJokes() {
 
   const fadeAnimSetup = useRef(new Animated.Value(0)).current;
   const fadeAnimPunchline = useRef(new Animated.Value(0)).current;
-
-  // how to get  I give up button to appear after a delay?
-
-  const fadeIn = (fadeAnim) => {
-    // Will change fadeAnim value to 1 in 5 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 5000,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const fadeOut = (fadeAnim) => {
-    // Will change fadeAnim value to 0 in 3 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 1,
-      useNativeDriver: true,
-    }).start();
-  };
+  const buttonAnimFade = useRef(new Animated.Value(1)).current;
 
   const handlePress = async () => {
     if (timesPressed == 0) {const jsonData = await useGetJoke('programming').then((response) => response.json())
     
     setTimesPressed(1)
+    disappear(buttonAnimFade)
     setButtonText("I GIVE UP!")
     setSetup(jsonData[0].setup)
     setPunchline(jsonData[0].punchline)
-    fadeIn(fadeAnimSetup)}
+    fadeIn(fadeAnimSetup)
+  setTimeout(()=> appear(buttonAnimFade), 6000)}
 
     if (timesPressed == 1) {
       setTimesPressed(2)
+      disappear(buttonAnimFade)
       setButtonText('TELL ME ANOTHER ONE!')
       fadeIn(fadeAnimPunchline)
+      setTimeout(()=> appear(buttonAnimFade), 6000)
     }
 
     if (timesPressed == 2) {
@@ -81,7 +67,9 @@ export default function ProgrammingJokes() {
         ]}>
         <Text style={styles.fadingText}>{punchline}</Text>
       </Animated.View>
-        <Button title={buttonText} color={'white'} onPress={handlePress}></Button>
+        <Animated.View style={{
+          opacity: buttonAnimFade
+        }}><Button title={buttonText} color={'white'} onPress={handlePress}></Button></Animated.View>
       <StatusBar style="auto" />
     </View>
   );
