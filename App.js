@@ -2,13 +2,14 @@ import React from 'react'
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Button, View, Text} from 'react-native';
-import ProgrammingJokes from './src/components/joke/programmingJokes';
+import Concierge from './src/components/joke/concierge';
+import GeneralJokes from './src/components/joke/generalJokes'
 
 export default function App() {
 
   const Stack = createNativeStackNavigator();
 
-  function HomeScreen() {
+  function HomeScreen({ navigation }) {
 
     const handlePress = () => {
       console.log('test')
@@ -19,7 +20,7 @@ export default function App() {
 <Text>I am JokeBot.</Text>
 <Text>Would you like to hear a joke?</Text>
 
-<Button title={'TELL ME A JOKE!'} color={'white'} onPress={handlePress}></Button>
+<Button title={'TELL ME A JOKE!'} color={'white'} onPress={() => navigation.navigate('Concierge')}></Button>
 </View>
     );
   }
@@ -27,13 +28,10 @@ export default function App() {
 
   return (
     <NavigationContainer>
-<Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{title: 'Welcome'}}
-        />
-        {/* <Stack.Screen name="Profile" component={ProgrammingJokes} /> */}
+      <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen name="Home" component={HomeScreen} options={{title: ''}} />
+          <Stack.Screen name="Concierge" component={Concierge} options={{title: ''}} />
+          <Stack.Screen name="GeneralJokes" component={GeneralJokes} options={{title: ''}} />
       </Stack.Navigator>
     </NavigationContainer>
   )
