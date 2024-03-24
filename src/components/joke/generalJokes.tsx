@@ -1,46 +1,46 @@
-import React, { useRef, useState } from 'react'
-import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useRef, useState } from 'react'
 import {Animated, Button, Text, View, StyleSheet} from 'react-native'
 import useGetJoke from '../hooks/useGetJoke'
 import {fadeIn, fadeOut, disappear, appear} from './animations'
 
-export default function GeneralJokes() {
-    const [setup, setSetup] = useState()
+export default function GeneralJokes({ navigation }) {
+  const [setup, setSetup] = useState()
   const [punchline, setPunchline] = useState()
-  const [buttonText, setButtonText] = useState('TELL ME A JOKE!')
   const [timesPressed, setTimesPressed] = useState(0)
 
   const fadeAnimSetup = useRef(new Animated.Value(0)).current;
   const fadeAnimPunchline = useRef(new Animated.Value(0)).current;
-  const buttonAnimFade = useRef(new Animated.Value(1)).current;
+  const buttonAnimFade = useRef(new Animated.Value(0)).current;
+  const yesNoAnimFade = useRef(new Animated.Value(0)).current;
+  const fadeAnimText = useRef(new Animated.Value(0)).current;
 
-  const handlePress = async () => {
-    if (timesPressed == 0) {const jsonData = await useGetJoke('general').then((response) => response.json())
-    
-    setTimesPressed(1)
-    disappear(buttonAnimFade)
-    setButtonText("I GIVE UP!")
-    setSetup(jsonData[0].setup)
-    setPunchline(jsonData[0].punchline)
+  useEffect(() => {
+    useGetJoke('general')
+    .then((response) => response.json())
+    .then(data => {
+      setSetup(data[0].setup)
+    setPunchline(data[0].punchline)
     fadeIn(fadeAnimSetup)
-    setTimeout(()=> appear(buttonAnimFade), 6000)}
+    setTimeout(()=> appear(buttonAnimFade), 6000)
+  })
+  }, [])
 
-    if (timesPressed == 1) {
-      setTimesPressed(2)
+  const handlePress = () => {
+      setTimesPressed(1)
       disappear(buttonAnimFade)
-      setButtonText('TELL ME ANOTHER ONE!')
       fadeIn(fadeAnimPunchline)
       setTimeout(()=> appear(buttonAnimFade), 6000)
-    }
-
-    if (timesPressed == 2) {
       setTimesPressed(0);
-      setSetup(null);
-      setPunchline(null);
-      fadeOut(fadeAnimSetup);
-      fadeOut(fadeAnimPunchline);
-      setButtonText('TELL ME A JOKE!')
-    }
+      fadeIn(fadeAnimText);
+      fadeIn(yesNoAnimFade);
+  }
+
+  const handleYesPress = () => {
+    setSetup(null);
+    setPunchline(null);
+    fadeOut(fadeAnimSetup);
+    fadeOut(fadeAnimPunchline);
+    navigation.navigate('Concierge')
   }
 
   return (
@@ -69,8 +69,38 @@ export default function GeneralJokes() {
         {
           opacity: buttonAnimFade
         },
-        ]}><Button title={buttonText} color={'white'} onPress={handlePress}></Button></Animated.View>
-      <StatusBar style="auto" />
+        ]}><Button title={"I GIVE UP!"} color={'white'} onPress={handlePress}></Button>
+        </Animated.View>
+        <Animated.View
+        style={[
+          styles.fadingContainer,
+          {
+            // Bind opacity to animated value
+            opacity: fadeAnimText,
+          },
+        ]}>
+        <Text style={styles.fadingText}>Would you like to hear another?</Text>
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.button,
+          {
+            // Bind opacity to animated value
+            opacity: yesNoAnimFade,
+          },
+        ]}>
+        <Button title={"Yes!"} onPress={handleYesPress}></Button>
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.button,
+          {
+            // Bind opacity to animated value
+            opacity: yesNoAnimFade,
+          },
+        ]}>
+        <Button title={"No!"}></Button>
+      </Animated.View>
     </View>
   );
   
