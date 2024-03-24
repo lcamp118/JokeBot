@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Button, View, Text} from 'react-native';
 import Concierge from './src/components/joke/concierge';
+import NoScreen from './src/components/joke/noScreen';
 import GeneralJokes from './src/components/joke/generalJokes'
 import ProgrammingJokes from './src/components/joke/programmingJokes';
 // import KnockKnockJokes from './src/components/joke/knockKnockJokes';
@@ -35,6 +36,7 @@ export default function App() {
           <Stack.Screen name="Concierge" component={Concierge} options={{title: ''}} />
           <Stack.Screen name="GeneralJokes" component={GeneralJokes} options={{title: ''}} />
           <Stack.Screen name="ProgrammingJokes" component={ProgrammingJokes} options={{title: ''}} />
+          <Stack.Screen name="NoScreen" component={NoScreen} options={{title: ''}} />
           {/* <Stack.Screen name="KnockKnockJokes" component={KnockKnockJokes} options={{title: ''}} /> */}
           {/* <Stack.Screen name="DadJokes" component={DadJokes} options={{title: ''}} /> */}
           {/* <Stack.Screen name="RandomJokes" component={RandomJokes} options={{title: ''}} /> */}

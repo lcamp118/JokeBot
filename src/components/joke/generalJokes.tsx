@@ -99,7 +99,7 @@ export default function GeneralJokes({ navigation }) {
             opacity: yesNoAnimFade,
           },
         ]}>
-        <Button title={"No!"}></Button>
+        <Button title={"No!"} onPress={() => navigation.navigate('NoScreen')}></Button>
       </Animated.View>
     </View>
   );
