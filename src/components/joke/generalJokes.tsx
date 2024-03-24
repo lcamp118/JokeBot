@@ -6,7 +6,6 @@ import {fadeIn, fadeOut, disappear, appear} from './animations'
 export default function GeneralJokes({ navigation }) {
   const [setup, setSetup] = useState()
   const [punchline, setPunchline] = useState()
-  const [timesPressed, setTimesPressed] = useState(0)
 
   const fadeAnimSetup = useRef(new Animated.Value(0)).current;
   const fadeAnimPunchline = useRef(new Animated.Value(0)).current;
@@ -19,28 +18,17 @@ export default function GeneralJokes({ navigation }) {
     .then((response) => response.json())
     .then(data => {
       setSetup(data[0].setup)
-    setPunchline(data[0].punchline)
-    fadeIn(fadeAnimSetup)
-    setTimeout(()=> appear(buttonAnimFade), 6000)
-  })
+      setPunchline(data[0].punchline)
+      fadeIn(fadeAnimSetup)
+      setTimeout(()=> appear(buttonAnimFade), 6000)
+    })
   }, [])
 
   const handlePress = () => {
-      setTimesPressed(1)
-      disappear(buttonAnimFade)
-      fadeIn(fadeAnimPunchline)
-      setTimeout(()=> appear(buttonAnimFade), 6000)
-      setTimesPressed(0);
-      fadeIn(fadeAnimText);
-      fadeIn(yesNoAnimFade);
-  }
-
-  const handleYesPress = () => {
-    setSetup(null);
-    setPunchline(null);
-    fadeOut(fadeAnimSetup);
-    fadeOut(fadeAnimPunchline);
-    navigation.navigate('Concierge')
+    disappear(buttonAnimFade)
+    fadeIn(fadeAnimPunchline)
+    setTimeout(() => fadeIn(fadeAnimText), 3000);
+    setTimeout(() => fadeIn(yesNoAnimFade), 4000);
   }
 
   return (
@@ -89,7 +77,7 @@ export default function GeneralJokes({ navigation }) {
             opacity: yesNoAnimFade,
           },
         ]}>
-        <Button title={"Yes!"} onPress={handleYesPress}></Button>
+        <Button title={"Yes!"} onPress={() => navigation.navigate('Concierge')}></Button>
       </Animated.View>
       <Animated.View
         style={[

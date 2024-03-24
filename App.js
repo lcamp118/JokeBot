@@ -1,7 +1,7 @@
 import React from 'react'
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Button, View, Text} from 'react-native';
+import {Button, View, Text, StyleSheet} from 'react-native';
 import Concierge from './src/components/joke/concierge';
 import NoScreen from './src/components/joke/noScreen';
 import GeneralJokes from './src/components/joke/generalJokes'
@@ -13,18 +13,15 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   function HomeScreen({ navigation }) {
-
-    const handlePress = () => {
-      console.log('test')
-    }
     return (
-<View>
-<Text>Well, hello there!</Text>
-<Text>I am JokeBot.</Text>
-<Text>Would you like to hear a joke?</Text>
-
-<Button title={'TELL ME A JOKE!'} color={'white'} onPress={() => navigation.navigate('Concierge')}></Button>
-</View>
+      <View style={styles.container}>
+        <Text style={styles.text}>Well, hello there!</Text>
+        <Text style={styles.text}>I am JokeBot.</Text>
+        <Text style={styles.text}>Would you like to hear a joke?</Text>
+        <View style={styles.button}>
+          <Button title={'TELL ME A JOKE!'} color={'white'} onPress={() => navigation.navigate('Concierge')}></Button>
+        </View>
+      </View>
     );
   }
   
@@ -44,3 +41,18 @@ export default function App() {
     </NavigationContainer>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'white',
+  },
+  button: {
+    backgroundColor: 'purple',
+  },
+})
