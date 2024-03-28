@@ -7,6 +7,7 @@ import NoScreen from './src/components/joke/noScreen';
 import GeneralJokes from './src/components/joke/generalJokes'
 import ProgrammingJokes from './src/components/joke/programmingJokes';
 // import KnockKnockJokes from './src/components/joke/knockKnockJokes';
+import JokeBot from './src/components/joke/jokeBot'
 import { fadeIn } from './src/components/joke/animations'
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
   function HomeScreen({ navigation }) {
     return (
       <View style={styles.container}>
+        <JokeBot />
         <Animated.View style={[
           {
             // Bind opacity to animated value
@@ -78,12 +80,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
   },
   text: {
     color: 'white',
+    fontSize: 25,
+    padding: 10,
   },
   button: {
     backgroundColor: 'purple',
+    marginBottom: 100,
+    marginTop: 30,
   },
 })

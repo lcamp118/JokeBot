@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { Button, View, Text, StyleSheet, Animated } from 'react-native';
 import { fadeIn } from './animations';
+import JokeBot from './jokeBot';
 
 export default function Concierge({ navigation }) {
     const text1Fade = useRef(new Animated.Value(0)).current;
@@ -13,6 +14,7 @@ export default function Concierge({ navigation }) {
 
   return (
     <View style={styles.container}>
+        <JokeBot />
         <Animated.View style={[
           {
             // Bind opacity to animated value
@@ -38,7 +40,7 @@ export default function Concierge({ navigation }) {
             <View style={styles.button}>
                 <Button title={'General'} color={'white'} onPress={() => navigation.navigate('GeneralJokes')}></Button>
             </View>
-            <View style={styles.button}>
+            <View style={[styles.button, {marginBottom: 100}]}>
                 <Button title={'Programming'} color={'white'} onPress={() => navigation.navigate('ProgrammingJokes')}></Button>
             </View>
         </Animated.View>
@@ -51,12 +53,15 @@ const styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#000',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-end',
     },
     text: {
       color: 'white',
+      fontSize: 25,
+      padding: 10,
     },
     button: {
       backgroundColor: 'purple',
+      marginTop: 30,
     },
   })

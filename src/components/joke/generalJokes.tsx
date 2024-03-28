@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import {Animated, Button, Text, View, StyleSheet} from 'react-native'
 import useGetJoke from '../hooks/useGetJoke'
 import {fadeIn, fadeOut, disappear, appear} from './animations'
+import JokeBot from './jokeBot'
 
 export default function GeneralJokes({ navigation }) {
   const [setup, setSetup] = useState()
@@ -69,12 +70,14 @@ export default function GeneralJokes({ navigation }) {
         ]}>
         <Text style={styles.fadingText}>Would you like to hear another?</Text>
       </Animated.View>
+      <View style={{ flexDirection: 'row'}}>
       <Animated.View
         style={[
           styles.button,
           {
             // Bind opacity to animated value
             opacity: yesNoAnimFade,
+            marginRight: 20,
           },
         ]}>
         <Button title={"Yes!"} onPress={() => navigation.navigate('Concierge')}></Button>
@@ -89,6 +92,7 @@ export default function GeneralJokes({ navigation }) {
         ]}>
         <Button title={"No!"} onPress={() => navigation.navigate('NoScreen')}></Button>
       </Animated.View>
+      </View>
     </View>
   );
   
@@ -115,5 +119,6 @@ const styles = StyleSheet.create({
     },
     button: {
       backgroundColor: 'purple',
+      color: '#fff'
     },
   })
